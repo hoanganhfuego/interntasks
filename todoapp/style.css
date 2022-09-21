@@ -27,6 +27,10 @@
     padding: 10px;
 }
 
+#list::-webkit-scrollbar {
+    display: none;
+}
+
 #list div{
     display: flex;
     flex-direction: row;

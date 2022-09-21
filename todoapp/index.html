@@ -10,7 +10,20 @@
 <body>
     <div class="main">
         <div class="content">
-            <input type="text" id="search" placeholder="search...">
+            <label for="search">title</label>
+            <input type="text" id="search" placeholder="title">
+            <label for="date">date</label>
+            <input type="date" class="search-date" placeholder="title"> --
+            <input type="date" class="search-date" placeholder="title">
+            <div id="status-search-field">
+                <label for="check-search">status</label><br>
+                <input type="radio" class="search-status" id="todo" name="check-search" value="todo">
+                <label for="todo">todo</label><br>
+                <input type="radio" class="search-status" name="check-search" id="inprogress" value="inprogress">
+                <label for="inprogress">inprogress</label><br>
+                <input type="radio" class="search-status" name="check-search" id="done" value="done">
+                <label for="done">done</label><br>
+            </div>
             <span id="doSearch"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></span>
             <div id="input-field">
                 <label for="title">title</label>
@@ -18,6 +31,7 @@
                 <label for="deadline">deadline</label>
                 <input type="date" id="deadline" placeholder="deadline">
                 <div id="status-field">
+                    <label for="check">status</label><br>
                     <input type="radio" id="todo" name="check" value="todo">
                     <label for="todo">todo</label><br>
                     <input type="radio" name="check" id="inprogress" value="inprogress">

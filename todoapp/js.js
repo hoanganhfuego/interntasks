@@ -3,14 +3,14 @@ const update = document.querySelector('#update')
 const title = document.querySelector('#title')
 const deadline = document.querySelector('#deadline')
 const status = document.querySelectorAll('#status-field input')
+const search = document.querySelector('#doSearch')
 const list = document.querySelector('#list')
-const search = document.querySelector('#search')
 const todoList = []
 
 update.setAttribute('style', 'display:none')
 submitbtn.addEventListener('click', handleSubmit)
 update.addEventListener('click', handleUpdate)
-search.addEventListener('input', throttled(handleSearch, 500))
+search.addEventListener('click', handleSearch)
 window.addEventListener('load',() => {
     let saveList = JSON.parse(localStorage.getItem('todolist'))
     for(let i = 0; i < saveList.length; i++){
@@ -18,25 +18,6 @@ window.addEventListener('load',() => {
     }
     render(todoList)
 });
-
-function throttled(callback, delay) {
-    let lastRun = delay;
-    return () => {
-        const now = new Date().getTime();
-        if(now - lastRun >= delay){
-            lastRun = now;
-            callback();
-        }
-    }
-}
-
-function handleSearch(){
-    const searchList = []
-    let searchValue = search.value
-    for(let i = 0; i < todoList.length; i++){
-        searchList.push(todoList[i].title)
-    }
-}
 
 function handleUpdate(){
     for(let i = 0; i < todoList.length; i++){
@@ -144,4 +125,37 @@ function cleanUp(){
     for(let i = 0; i < status.length; i++){
         status[i].checked = false
     }
+}
+
+// search....................
+
+function handleSearch(){
+    const searchTitle = document.querySelector('#search')
+    const searchDate = document.querySelectorAll('.search-date')
+    const searchStatus = document.querySelectorAll('#status-search-field input')
+    let searchList = [...todoList]
+    // title
+    if(searchTitle.value){
+        searchList = searchList.filter(item => item.title.includes(searchTitle.value))
+    }
+    // status
+    if(Array.from(searchStatus).some(item => item.checked == true)){
+        let statusChecked = ''
+        for(let i = 0; i < searchStatus.length; i++){
+            if(searchStatus[i].checked){
+                statusChecked = searchStatus[i].value
+            }
+        }
+        searchList = searchList.filter(item => {
+            return (item.status === statusChecked)
+        })
+    }
+    if(Array.from(searchDate).every(item => item.value)){
+        let minDate = new Date(searchDate[0].value)
+        let maxDate = new Date(searchDate[1].value)
+        searchList = searchList.filter(item => {
+            return (minDate < new Date(item.deadline) && new Date(item.deadline) < maxDate)
+        })
+    }
+    render(searchList)
 }
