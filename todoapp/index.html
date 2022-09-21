@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main">
+        <div class="content">
+            <input type="text" id="search" placeholder="search...">
+            <span id="doSearch"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></span>
+            <div id="input-field">
+                <label for="title">title</label>
+                <input type="text" id="title" placeholder="title">
+                <label for="deadline">deadline</label>
+                <input type="date" id="deadline" placeholder="deadline">
+                <div id="status-field">
+                    <input type="radio" id="todo" name="check" value="todo">
+                    <label for="todo">todo</label><br>
+                    <input type="radio" name="check" id="inprogress" value="inprogress">
+                    <label for="inprogress">inprogress</label><br>
+                    <input type="radio" name="check" id="done" value="done">
+                    <label for="done">done</label><br>
+                </div>
+                <button id="submit">add</button>
+                <button id="update">update</button>
+            </div>
+            <div id="list"></div>
+        </div> 
+    </div>
+</body>
+<script src="./js.js"></script>
+<script src="https://kit.fontawesome.com/cf17e2036e.js" crossorigin="anonymous"></script>
+</html>
