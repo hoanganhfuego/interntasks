@@ -9,10 +9,10 @@
     <title>Document</title>
 </head>
 <body>
-    <div class=" flex flex-col items-center ">
-        <div class=" w-1/2 ">
-            <div class="flex justify-between mt-10 ">
-                <div class="border-2 border-black rounded-lg p-4 w-98 flex justify-between items-center ">
+    <div class=" flex flex-col items-center bg-[#cdb4db] h-[100vh]">
+        <div class=" w-max bg-[#ffafcc] h-fit mt-10 rounded-lg">
+            <div class="flex justify-between ">
+                <div class="border-2 border-black rounded-lg p-4 mr-6 w-1/2 flex justify-between items-center ">
                     <div>
                         <div class="title">
                             <label for="search">title</label>
@@ -24,18 +24,18 @@
                             <input type="date" class="search-date" placeholder="title">
                         </div>
                         <div id="status-search-field">
-                            <label for="check-search">status</label>
-                            <input type="radio" class="search-status" id="todo" name="check-search" value="todo">
-                            <label for="todo">todo</label>
-                            <input type="radio" class="search-status" name="check-search" id="inprogress" value="inprogress">
-                            <label for="inprogress">inprogress</label>
-                            <input type="radio" class="search-status" name="check-search" id="done" value="done">
-                            <label for="done">done</label>
+                            <span>status</span>
+                            <input type="radio" class="search-status" name="check-search" id="todo-search" value="todo">
+                            <label for="todo-search">todo</label>
+                            <input type="radio" class="search-status" name="check-search" id="inprogress-search" value="inprogress">
+                            <label for="inprogress-search">inprogress</label>
+                            <input type="radio" class="search-status" name="check-search" id="done-search" value="done">
+                            <label for="done-search">done</label>
                         </div>
                     </div>
                     <i id='doSearch' class="fa-sharp fa-solid fa-magnifying-glass text-3xl hover:cursor-pointer "></i>
                 </div>
-                <div class="content border-2 border-black w-98 rounded-lg p-8 flex ">
+                <div class="content border-2 border-black w-1/2 rounded-lg p-8 flex ">
                     <div id="input-field">
                         <div>
                             <label for="title">title</label>
@@ -46,8 +46,8 @@
                             <input type="date" id="deadline" placeholder="deadline">
                         </div>
                         <div id="status-field">
-                            <label for="check">status</label>
-                            <input type="radio" id="todo" name="check" value="todo">
+                            <span>status</span>
+                            <input type="radio" name="check" id="todo" value="todo">
                             <label for="todo">todo</label>
                             <input type="radio" name="check" id="inprogress" value="inprogress">
                             <label for="inprogress">inprogress</label>
@@ -57,9 +57,19 @@
                         <button id="submit" class=" border-2 border-black rounded w-28 ">add</button>
                         <button id="update" class=" border-2 border-black rounded w-28 ">update</button>
                     </div>
-                </div> 
+                </div>
             </div>
-            <div id="list" class=" w-full flex flex-col h-96 border-2 border-black rounded mt-3 p-2 "></div>
+            <div class="border-2 border-black rounded p-4 mt-6">
+                <div class="w-full flex items-center justify-between border-2 border-black rounded mt-1">
+                    <span class=" w-48 text-center ">number</span>
+                    <span class=" w-48 text-center ">title</span>
+                    <span class=" w-48 text-center ">deadline</span>
+                    <span class=" w-48 text-center ">status</span>
+                    <span class=" w-48 text-center ">update</span>
+                </div>
+                <div id="list" class=" overflow-scroll h-96">
+            </div>
+            </div>
         </div>
     </div>
 </body>

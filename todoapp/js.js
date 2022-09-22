@@ -13,7 +13,6 @@ submitbtn.addEventListener('click', handleSubmit)
 update.addEventListener('click', handleUpdate)
 search.addEventListener('click', handleSearch)
 window.addEventListener('load',() => {
-    console.log('xin chao')
     let saveList = JSON.parse(localStorage.getItem('todolist'))
     if(saveList.length){
         for(let i = 0; i < saveList.length; i++){
@@ -99,16 +98,14 @@ function handleColorStatus(deadline, status){
 function template(index, infor){
     let {uniqueId, title, deadline, status} = infor
     return(
-        `<div id='${uniqueId}' class=' w-full flex items-center justify-between border-2 border-black rounded m-1 p-1 ' style='${handleColorStatus(deadline, status)}'>
-            <h3 class=' w-1/3 ' >${index}</h3>
-            <div class='w-1/3 todo-content flex flex-row items-center justify-between'>
-                <p class='w-1/3 text-center'>${title}</p>
-                <p class='w-1/3 text-center'>${deadline}</p>
-                <p class='w-1/3 text-center'>${status}</p>
-            </div>
-            <div>
-                <button onclick='handleEdit(event)'>edit</button>
-                <button onclick="handleDelete(event)">delete</button>
+        `<div id='${uniqueId}' class=' w-full flex items-center justify-between border-2 border-black rounded mt-1 h-16 ' style='${handleColorStatus(deadline, status)}'>
+            <h3 class='w-48 text-center'>${index}</h3>
+            <p class='w-48 text-center'>${title}</p>
+            <p class='w-48 text-center'>${deadline}</p>
+            <p class='w-48 text-center'>${status}</p>
+            <div class='w-48 flex justify-around'>
+                <button onclick='handleEdit(event)' class='border-2 border-black rounded w-14 '>edit</button>
+                <button onclick='handleDelete(event)' class='border-2 border-black rounded w-14 '>delete</button>
             </div>
         </div>`
     )
