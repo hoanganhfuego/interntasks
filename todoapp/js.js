@@ -6,6 +6,7 @@ const status = document.querySelectorAll('#status-field input')
 const search = document.querySelector('#doSearch')
 const list = document.querySelector('#list')
 const todoList = []
+let uniId = 0
 
 update.setAttribute('style', 'display:none')
 submitbtn.addEventListener('click', handleSubmit)
@@ -30,6 +31,7 @@ function handleUpdate(){
                 }
             }
             todoList.splice(i, 1, {
+                uniqueId: todoList[i].uniqueId,
                 isChooseToUpdate: false,
                 title: title.value,
                 deadline: deadline.value,
@@ -41,6 +43,7 @@ function handleUpdate(){
     cleanUp()
     submitbtn.removeAttribute('style')
     update.setAttribute('style', 'display:none')
+    localStorage.setItem('todolist', JSON.stringify(todoList))
 }
 
 function handleSubmit(){
@@ -52,6 +55,7 @@ function handleSubmit(){
         }
     }
     todoList.push({
+        uniqueId: uniId,
         isChooseToUpdate: false,
         title: title.value,
         deadline: deadline.value,
@@ -60,11 +64,12 @@ function handleSubmit(){
     localStorage.setItem('todolist', JSON.stringify(todoList))
     render(todoList)
     cleanUp()
+    uniId+=1
 }
 
 function handleDelete(event){
     let parentId = parseInt(event.target.parentNode.id)
-    todoList.splice(parentId-1,1)
+    todoList.splice(parentId,1)
     render(todoList)
     localStorage.setItem('todolist', JSON.stringify(todoList))
 }
@@ -73,7 +78,7 @@ function handleEdit(event){
     update.removeAttribute('style')
     submitbtn.setAttribute('style', 'display:none')
     let parentId = parseInt(event.target.parentNode.id)
-    let todo = todoList[parentId-1]
+    let todo = todoList[parentId]
     title.value = todo.title
     deadline.value = todo.deadline
     const status = document.querySelectorAll('#status-field input')
@@ -84,7 +89,8 @@ function handleEdit(event){
     }
     todo.isChooseToUpdate = true
 }
-function checkStatus(deadline, status){
+
+function handleColorStatus(deadline, status){
     let color = ''
     let today = new Date()
     let dl = new Date(deadline)
@@ -95,9 +101,9 @@ function checkStatus(deadline, status){
 }
 
 function template(index, infor){
-    let {title, deadline, status} = infor
+    let {uniqueId, title, deadline, status} = infor
     return(
-        `<div id='${index}' style='${checkStatus(deadline, status)}'>
+        `<div id='${uniqueId}' style='${handleColorStatus(deadline, status)}'>
             <h3>${index}</h3>
             <div class='content'>
                 <p>${title}</p>
@@ -150,6 +156,7 @@ function handleSearch(){
             return (item.status === statusChecked)
         })
     }
+    // deadline
     if(Array.from(searchDate).every(item => item.value)){
         let minDate = new Date(searchDate[0].value)
         let maxDate = new Date(searchDate[1].value)
