@@ -4,48 +4,66 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./output.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
 </head>
 <body>
-    <div class="main">
-        <div class="content">
-            <label for="search">title</label>
-            <input type="text" id="search" placeholder="title">
-            <label for="date">date</label>
-            <input type="date" class="search-date" placeholder="title"> --
-            <input type="date" class="search-date" placeholder="title">
-            <div id="status-search-field">
-                <label for="check-search">status</label><br>
-                <input type="radio" class="search-status" id="todo" name="check-search" value="todo">
-                <label for="todo">todo</label><br>
-                <input type="radio" class="search-status" name="check-search" id="inprogress" value="inprogress">
-                <label for="inprogress">inprogress</label><br>
-                <input type="radio" class="search-status" name="check-search" id="done" value="done">
-                <label for="done">done</label><br>
-            </div>
-            <span id="doSearch"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></span>
-            <div id="input-field">
-                <label for="title">title</label>
-                <input type="text" id="title" placeholder="title">
-                <label for="deadline">deadline</label>
-                <input type="date" id="deadline" placeholder="deadline">
-                <div id="status-field">
-                    <label for="check">status</label><br>
-                    <input type="radio" id="todo" name="check" value="todo">
-                    <label for="todo">todo</label><br>
-                    <input type="radio" name="check" id="inprogress" value="inprogress">
-                    <label for="inprogress">inprogress</label><br>
-                    <input type="radio" name="check" id="done" value="done">
-                    <label for="done">done</label><br>
+    <div class=" flex flex-col items-center ">
+        <div class=" w-1/2 ">
+            <div class="flex justify-between mt-10 ">
+                <div class="border-2 border-black rounded-lg p-4 w-98 flex justify-between items-center ">
+                    <div>
+                        <div class="title">
+                            <label for="search">title</label>
+                            <input type="text" id="search" placeholder="title">
+                        </div>
+                        <div class="date">
+                            <label for="date">date</label>
+                            <input type="date" class="search-date" placeholder="title">
+                            <input type="date" class="search-date" placeholder="title">
+                        </div>
+                        <div id="status-search-field">
+                            <label for="check-search">status</label>
+                            <input type="radio" class="search-status" id="todo" name="check-search" value="todo">
+                            <label for="todo">todo</label>
+                            <input type="radio" class="search-status" name="check-search" id="inprogress" value="inprogress">
+                            <label for="inprogress">inprogress</label>
+                            <input type="radio" class="search-status" name="check-search" id="done" value="done">
+                            <label for="done">done</label>
+                        </div>
+                    </div>
+                    <i class="fa-sharp fa-solid fa-magnifying-glass text-3xl hover:cursor-pointer "></i>
                 </div>
-                <button id="submit">add</button>
-                <button id="update">update</button>
+                <div class="content border-2 border-black w-98 rounded-lg p-8 flex ">
+                    <div id="input-field">
+                        <div>
+                            <label for="title">title</label>
+                            <input type="text" id="title" placeholder="title">
+                        </div>
+                        <div>
+                            <label for="deadline">deadline</label>
+                            <input type="date" id="deadline" placeholder="deadline">
+                        </div>
+                        <div id="status-field">
+                            <label for="check">status</label>
+                            <input type="radio" id="todo" name="check" value="todo">
+                            <label for="todo">todo</label>
+                            <input type="radio" name="check" id="inprogress" value="inprogress">
+                            <label for="inprogress">inprogress</label>
+                            <input type="radio" name="check" id="done" value="done">
+                            <label for="done">done</label>
+                        </div>
+                        <button id="submit" class=" border-2 border-black rounded w-28 ">add</button>
+                        <button id="update" class=" border-2 border-black rounded w-28 ">update</button>
+                    </div>
+                </div> 
             </div>
-            <div id="list"></div>
-        </div> 
+            <div id="list" class=" w-full flex flex-col h-96 border-2 border-black rounded mt-3 p-2 "></div>
+        </div>
     </div>
 </body>
+
 <script src="./js.js"></script>
 <script src="https://kit.fontawesome.com/cf17e2036e.js" crossorigin="anonymous"></script>
 </html>

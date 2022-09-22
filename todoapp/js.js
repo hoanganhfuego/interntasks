@@ -14,10 +14,12 @@ update.addEventListener('click', handleUpdate)
 search.addEventListener('click', handleSearch)
 window.addEventListener('load',() => {
     let saveList = JSON.parse(localStorage.getItem('todolist'))
-    for(let i = 0; i < saveList.length; i++){
-        todoList.push(saveList[i])
+    if(saveList.length){
+        for(let i = 0; i < saveList.length; i++){
+            todoList.push(saveList[i])
+        }
+        render(todoList)
     }
-    render(todoList)
 });
 
 function handleUpdate(){
@@ -25,11 +27,7 @@ function handleUpdate(){
         if(todoList[i].isChooseToUpdate){
             const status = document.querySelectorAll('#status-field input')
             let statusChecked = ''
-            for(let i = 0; i < status.length; i++){
-                if(status[i].checked){
-                    statusChecked = status[i].value
-                }
-            }
+            status.forEach(item => {if(item.checked){statusChecked = item.value }})
             todoList.splice(i, 1, {
                 uniqueId: todoList[i].uniqueId,
                 isChooseToUpdate: false,
@@ -49,11 +47,7 @@ function handleUpdate(){
 function handleSubmit(){
     const status = document.querySelectorAll('#status-field input')
     let statusChecked = ''
-    for(let i = 0; i < status.length; i++){
-        if(status[i].checked){
-            statusChecked = status[i].value
-        }
-    }
+    status.forEach(item => {if(item.checked){statusChecked = item.value }})
     todoList.push({
         uniqueId: uniId,
         isChooseToUpdate: false,
@@ -69,7 +63,7 @@ function handleSubmit(){
 
 function handleDelete(event){
     let parentId = parseInt(event.target.parentNode.id)
-    todoList.splice(parentId,1)
+    todoList.splice(parentId-1,1)
     render(todoList)
     localStorage.setItem('todolist', JSON.stringify(todoList))
 }
@@ -82,11 +76,7 @@ function handleEdit(event){
     title.value = todo.title
     deadline.value = todo.deadline
     const status = document.querySelectorAll('#status-field input')
-    for(let i = 0; i < status.length; i++){
-        if(status[i].value == todo.status){
-            status[i].checked = true
-        }
-    }
+    status.forEach(item => {if(item.value == todo.status){item.checked = true }})
     todo.isChooseToUpdate = true
 }
 
@@ -103,24 +93,24 @@ function handleColorStatus(deadline, status){
 function template(index, infor){
     let {uniqueId, title, deadline, status} = infor
     return(
-        `<div id='${uniqueId}' style='${handleColorStatus(deadline, status)}'>
-            <h3>${index}</h3>
-            <div class='content'>
-                <p>${title}</p>
-                <p>${deadline}</p>
-                <p>${status}</p>
+        `<div id='${uniqueId}' class=' w-full flex items-center justify-between border-2 border-black rounded m-1 p-1 ' style='${handleColorStatus(deadline, status)}'>
+            <h3 class=' w-1/3 ' >${index}</h3>
+            <div class='w-1/3 todo-content flex flex-row items-center justify-between'>
+                <p class='w-1/3 text-center'>${title}</p>
+                <p class='w-1/3 text-center'>${deadline}</p>
+                <p class='w-1/3 text-center'>${status}</p>
             </div>
-            <button onclick='handleEdit(event)'>edit</button>
-            <button onclick="handleDelete(event)">delete</button>
+            <div>
+                <button onclick='handleEdit(event)'>edit</button>
+                <button onclick="handleDelete(event)">delete</button>
+            </div>
         </div>`
     )
 }
 
 function render(listToRender){
     let renderValue = ''
-    for(let i = 0; i < listToRender.length; i++){
-        renderValue += template(i+1, listToRender[i])
-    }
+    listToRender.forEach((item, i) => {renderValue += template(i+1, item)})
     list.innerHTML = renderValue
 }
 
@@ -128,9 +118,16 @@ function cleanUp(){
     const status = document.querySelectorAll('#status-field input')
     title.value = ''
     deadline.value = ''
-    for(let i = 0; i < status.length; i++){
-        status[i].checked = false
-    }
+    status.forEach(item => item.checked = false)
+}
+
+function cleanUpSearch(){
+    const searchStatus = document.querySelectorAll('#status-search-field input')
+    const searchTitle = document.querySelector('#search')
+    const searchDate = document.querySelectorAll('.search-date')
+    searchDate.value = ''
+    searchTitle.value = ''
+    searchStatus.forEach(item => item.checked = false)
 }
 
 // search....................
@@ -147,11 +144,7 @@ function handleSearch(){
     // status
     if(Array.from(searchStatus).some(item => item.checked == true)){
         let statusChecked = ''
-        for(let i = 0; i < searchStatus.length; i++){
-            if(searchStatus[i].checked){
-                statusChecked = searchStatus[i].value
-            }
-        }
+        searchStatus.forEach(item => {if(item.checked) statusChecked = searchStatus[i].value})
         searchList = searchList.filter(item => {
             return (item.status === statusChecked)
         })
@@ -165,4 +158,5 @@ function handleSearch(){
         })
     }
     render(searchList)
+    cleanUpSearch()
 }
