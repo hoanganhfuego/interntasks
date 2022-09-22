@@ -13,6 +13,7 @@ submitbtn.addEventListener('click', handleSubmit)
 update.addEventListener('click', handleUpdate)
 search.addEventListener('click', handleSearch)
 window.addEventListener('load',() => {
+    console.log('xin chao')
     let saveList = JSON.parse(localStorage.getItem('todolist'))
     if(saveList.length){
         for(let i = 0; i < saveList.length; i++){
@@ -62,8 +63,10 @@ function handleSubmit(){
 }
 
 function handleDelete(event){
-    let parentId = parseInt(event.target.parentNode.id)
-    todoList.splice(parentId-1,1)
+    let parentId = parseInt(event.target.parentNode.parentNode.id)
+    todoList.forEach((item, index) => {
+        if(item.uniqueId == parentId) todoList.splice(index, 1)
+    })
     render(todoList)
     localStorage.setItem('todolist', JSON.stringify(todoList))
 }
@@ -71,8 +74,11 @@ function handleDelete(event){
 function handleEdit(event){
     update.removeAttribute('style')
     submitbtn.setAttribute('style', 'display:none')
-    let parentId = parseInt(event.target.parentNode.id)
-    let todo = todoList[parentId]
+    let parentId = parseInt(event.target.parentNode.parentNode.id)
+    let todo= {}
+    todoList.forEach((item, index) => {
+        if(item.uniqueId == parentId) todo = item
+    })
     title.value = todo.title
     deadline.value = todo.deadline
     const status = document.querySelectorAll('#status-field input')
@@ -144,7 +150,7 @@ function handleSearch(){
     // status
     if(Array.from(searchStatus).some(item => item.checked == true)){
         let statusChecked = ''
-        searchStatus.forEach(item => {if(item.checked) statusChecked = searchStatus[i].value})
+        searchStatus.forEach((item, i) => {if(item.checked) statusChecked = searchStatus[i].value})
         searchList = searchList.filter(item => {
             return (item.status === statusChecked)
         })
