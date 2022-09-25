@@ -4,20 +4,28 @@ const initialState = JSON.parse(localStorage.getItem('todoList')) || []
 
 export const ListStore = createSlice({
     name: 'ListStore',
-    initialState,
+    initialState: {
+        todolist: initialState,
+        isEditChoose: {}
+    },
     reducers: {
         addTodo: (state, action)=> {
-            state.unshift(action.payload)
-            localStorage.setItem('todoList', JSON.stringify(state))
+            state.todolist.unshift(action.payload)
+            localStorage.setItem('todoList', JSON.stringify(state.todolist))
         },
         deleteTodo: (state, action) => {
-            state.forEach((todo, index) => {
-                if(todo.id === action.payload) state.splice(index,1)
+            state.todolist.forEach((todo, index) => {
+                if(todo.id === action.payload) state.todolist.splice(index,1)
             });
-            localStorage.setItem('todoList', JSON.stringify(state))
+            localStorage.setItem('todoList', JSON.stringify(state.todolist))
         },
         editTodo: (state, action) => {
-
+            // console.log(action)
+            state.todolist.forEach((todo, index)=>{
+                if(todo.id === action.payload){
+                    state.isEditChoose = state.todolist.slice(index, 1)
+                }
+            })
         }
     },
 })
