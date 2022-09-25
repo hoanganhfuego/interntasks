@@ -2,7 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-#list::-webkit-scrollbar { 
+*{
+    box-sizing: border-box;
+}
+
+.list::-webkit-scrollbar { 
     display: none;
 }
 

@@ -1,20 +1,19 @@
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import List from "./List";
+import { useDispatch } from "react-redux";
+import { addTodo } from "../redux/listState";
+import nextId from "react-id-generator";
 
 export default function Input(){
-    console.log(JSON.parse(localStorage.getItem('todoList')))
-    const [todoList, setTodoList] = useState(JSON.parse(localStorage.getItem('todoList')) || [])
+    const dispatch = useDispatch()
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const onSubmit = data => {
-        console.log(data)
-        setTodoList((prev)=>[{...data, uniqueId: new Date()}, ...prev])
-        localStorage.setItem('todoList', JSON.stringify([data, ...todoList]))
+        const id = nextId()
+        dispatch(addTodo({...data, id: id}))
         reset()
     };
     return(
-        <div className=' h-[100%] flex flex-col justify-around'>
-            <form className='create-section flex flex-row items-center justify-around w-[840px] h-[80px] rounded-xl' onSubmit={handleSubmit(onSubmit)}>
+        <div className='h-[15%] flex flex-col justify-around'>
+            <form className=' p-2 create-section flex flex-row items-center justify-around w-[840px] h-[80px] rounded-xl' onSubmit={handleSubmit(onSubmit)}>
                 <input {...register("title")} type='text' placeholder="title" className="outline-none title min-w-[200px] text-center bg-[transparent] "></input>
                 <div className=" min-w-[200px] text-center">
                     <input type='date' {...register("deadline")} className='deadline bg-[transparent] text-white hover:cursor-pointer'></input>
@@ -26,11 +25,6 @@ export default function Input(){
                 </select>
                 <button className="min-w-[200px] text-center border-2 rounded-xl hover:bg-white">submit</button>
             </form>
-            <div className='list h-[600px] bg-zinc-900/50 rounded-xl text-white overflow-scroll'>
-                {todoList.map((todo, index)=>{
-                return <List todo={todo} key={index} index={index+1}/>
-                })}
-            </div>
         </div>
     )
 }
